@@ -33,5 +33,3 @@ python training/evaluate_model.py --rf_model models/random_forest.pkl --svd_mode
 Modify the --n_components parameter in feature_extraction.py to change the number of SVD components.
 Adjust hyperparameters in train_model.py to fine-tune the Random Forest classifier.
 Use custom datasets by specifying --input_folder in preprocess_data.py.
-## Contact
-For issues related to model training, contact bioinformatics@um6p.ma

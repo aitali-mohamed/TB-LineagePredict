@@ -13,6 +13,7 @@ from io import BytesIO
 import base64
 from sklearn.decomposition import TruncatedSVD
 from sklearn.ensemble import RandomForestClassifier
+from huggingface_hub import hf_hub_download
 
 # ---- PAGE CONFIGURATION ----
 st.set_page_config(page_title="TB-LineagePredict", layout="wide")
@@ -108,15 +109,28 @@ with st.container():
 
 # ---- MODEL LOADING ----
 @st.cache(allow_output_mutation=True)
-def load_models(svd_path, model_path):
-    svd = joblib.load(svd_path)
+def load_model(model_path):
     model = joblib.load(model_path)
-    return svd, model
+    return model
 
-svd_path = "models/truncated_svd.pkl"
 model_path = "models/random_forest.pkl"
-svd, model = load_models(svd_path, model_path)
+model = load_models(svd_path, model_path)
 
+MODEL_REPO = "medaitali/tb-lineagepredict-models"
+MODEL_FILENAME = "truncated_svd.pkl"
+
+def load_svd_from_huggingface():
+    """Download TruncatedSVD model from Hugging Face if not available locally."""
+    local_model_path = f"models/{MODEL_FILENAME}"
+    
+    if not os.path.exists(local_model_path):
+        print("Downloading TruncatedSVD model from Hugging Face...")
+        local_model_path = hf_hub_download(repo_id=MODEL_REPO, filename=MODEL_FILENAME)
+    
+    return joblib.load(local_model_path)
+
+# Load the model
+svd = load_svd_from_huggingface()
 # ---- FUNCTION TO DISPLAY & UPDATE FLOWCHART ----
 flowchart_placeholder = st.empty()
 
