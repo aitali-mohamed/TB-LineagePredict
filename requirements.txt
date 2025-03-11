@@ -1,0 +1,24 @@
+# Core Python libraries
+numpy
+pandas
+scipy
+joblib
+
+# Machine Learning & Feature Extraction
+scikit-learn
+
+# Bioinformatics & Genomic Data Processing
+pysam
+
+# Model Interpretability
+shap
+
+# Web Application (Streamlit)
+streamlit
+
+# Hugging Face Hub (For downloading models)
+huggingface_hub
+
+# Visualization
+matplotlib
+seaborn
